@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8n635jg6jknk"]
+
+[ext_resource type="Script" uid="uid://c3vjxwji666ix" path="res://scenes/entities/player.gd" id="1_ucweq"]
+[ext_resource type="Script" uid="uid://hcuxgjhxad5b" path="res://scripts/state_machine.gd" id="2_1ie0h"]
+[ext_resource type="Script" uid="uid://b844w1vk2etcr" path="res://scripts/state_node.gd" id="3_42nxq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0qees"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucweq"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ucweq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_0qees")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ucweq")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_init_state")]
+script = ExtResource("2_1ie0h")
+_init_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_42nxq")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.683806, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.253984)
