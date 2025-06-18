@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8n635jg6jknk"]
+[gd_scene load_steps=9 format=3 uid="uid://c8n635jg6jknk"]
 
 [ext_resource type="Script" uid="uid://c3vjxwji666ix" path="res://scenes/entities/player.gd" id="1_ucweq"]
 [ext_resource type="Script" uid="uid://hcuxgjhxad5b" path="res://scripts/state_machine.gd" id="2_1ie0h"]
 [ext_resource type="Script" uid="uid://b844w1vk2etcr" path="res://scripts/state_node.gd" id="3_42nxq"]
+[ext_resource type="Script" uid="uid://da1jwuq2igj46" path="res://scripts/health_component.gd" id="4_42nxq"]
+[ext_resource type="Script" uid="uid://t605ghve2tf6" path="res://scripts/hitbox_3d.gd" id="5_5u6hq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0qees"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ucweq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5u6hq"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_ucweq")
@@ -29,3 +33,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.683806, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.253984)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("4_42nxq")
+metadata/_custom_type_script = "uid://da1jwuq2igj46"
+
+[node name="HitBox3D" type="Area3D" parent="." node_paths=PackedStringArray("_health_component")]
+script = ExtResource("5_5u6hq")
+_health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox3D"]
+shape = SubResource("CylinderShape3D_5u6hq")
