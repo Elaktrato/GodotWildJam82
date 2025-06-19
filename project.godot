@@ -31,6 +31,10 @@ window/size/viewport_height=720
 
 enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg")
 
+[global_group]
+
+players=""
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -71,6 +75,12 @@ interact={
 [internationalization]
 
 locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
+
+[layer_names]
+
+3d_physics/layer_1="Environment"
+3d_physics/layer_2="Player"
+3d_physics/layer_3="Entities"
 
 [maaacks_game_template]
 

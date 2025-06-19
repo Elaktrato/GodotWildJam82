@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 var _walkingAcceleration: float = 35.0
-var _walkingSpeedCap: float = 1.0
+var _walkingSpeedCap: float = 3.0
 var _walkingDeceleration: float = 7.0
 var _walkingAirAcceleration: float = 20.0
 var _drag: float = .15

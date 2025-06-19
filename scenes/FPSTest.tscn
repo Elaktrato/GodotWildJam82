@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://nhcxu0qhvmwt"]
+[gd_scene load_steps=8 format=3 uid="uid://nhcxu0qhvmwt"]
 
 [ext_resource type="PackedScene" uid="uid://c8n635jg6jknk" path="res://scenes/entities/player.tscn" id="1_21wsp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5cou"]
-albedo_color = Color(0.577731, 0.739395, 0.790971, 1)
+[ext_resource type="PackedScene" uid="uid://tegkmtop0rn0" path="res://scenes/entities/big_bad.tscn" id="2_tj1t1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21wsp"]
 
@@ -14,13 +12,14 @@ sky_material = SubResource("ProceduralSkyMaterial_21wsp")
 background_mode = 2
 sky = SubResource("Sky_tj1t1")
 
-[node name="FpsTest" type="Node3D"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_21wsp"]
+vertices = PackedVector3Array(-4.5, 0.5, -5.25, -2.25, 0.5, -5.25, -2, 0.5, -12, -12, 0.5, -3.5, -4.75, 0.5, -3.5, -12, 0.5, -12, -0.5, 0.5, -5, -0.5, 0.5, -2.5, 12, 0.5, -2.5, 12, 0.5, -12, -3.75, 3, -4.25, -3.75, 3, -3, -1.5, 3, -3, -1.5, 3, -4.25, -4.5, 0.5, -2, -1, 0.5, 12, -1, 0.5, -2, -12, 0.5, 12, 12, 0.5, 12)
+polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 5, 0), PackedInt32Array(0, 5, 2), PackedInt32Array(6, 1, 2), PackedInt32Array(8, 7, 6), PackedInt32Array(2, 9, 6), PackedInt32Array(6, 9, 8), PackedInt32Array(13, 12, 10), PackedInt32Array(10, 12, 11), PackedInt32Array(3, 4, 14), PackedInt32Array(14, 16, 15), PackedInt32Array(3, 14, 17), PackedInt32Array(17, 14, 15), PackedInt32Array(7, 8, 16), PackedInt32Array(16, 8, 15), PackedInt32Array(15, 8, 18)]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.999, 0)
-use_collision = true
-size = Vector3(25, 1, 25)
-material = SubResource("StandardMaterial3D_o5cou")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5cou"]
+albedo_color = Color(0.577731, 0.739395, 0.790971, 1)
+
+[node name="FpsTest" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_o8184")
@@ -29,4 +28,23 @@ environment = SubResource("Environment_o8184")
 transform = Transform3D(0.408633, 0.79042, -0.456349, 0, 0.5, 0.866025, 0.912699, -0.353887, 0.204317, 0, 1.8258, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_21wsp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60901, 0)
+
+[node name="BigBad" parent="." instance=ExtResource("2_tj1t1")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.831555, 1.46474, -6.11642)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_21wsp")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(25, 1, 25)
+material = SubResource("StandardMaterial3D_o5cou")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.50634, 1, -3.54584)
+size = Vector3(3, 3, 2)
