@@ -3,9 +3,10 @@ extends CharacterBody3D
 @export var navigation_agent: NavigationAgent3D
 @export var random_range: float = 7.0
 @export var _eye: Node3D
+@export var _memory: Area3D
 @export_flags_3d_physics var raycast_collision_mask: int
 
-const SPEED = 1.0
+const SPEED = 2.0
 const JUMP_VELOCITY = 4.5
 
 var _follow_body: Node3D
@@ -79,7 +80,7 @@ func _on_line_of_sight_body_exited(body: Node3D) -> void:
 
 
 func _on_reposition_timeout() -> void:
-	if _follow_body && !_is_target_visible(_follow_body.global_position):
+	if _follow_body && !_is_target_visible(_follow_body.global_position) && !_memory.overlaps_body(_follow_body):
 		_follow_body = null
 		_chasing = false
 		print("Blocked off!")
@@ -89,7 +90,10 @@ func _on_reposition_timeout() -> void:
 func _set_target_position() -> void:
 	if _follow_body:
 		navigation_agent.target_position = _follow_body.global_position
-		_reposition_timer.start(0.25)
+		if !_is_target_visible(_follow_body.global_position) && _memory.overlaps_body(_follow_body):
+			_reposition_timer.start(8.0)
+		else:
+			_reposition_timer.start(0.25)
 	else:
 		var p = Vector3.ZERO
 		p.x = randf_range(-random_range, random_range)
