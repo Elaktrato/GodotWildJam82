@@ -1,6 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://tegkmtop0rn0"]
+[gd_scene load_steps=15 format=3 uid="uid://tegkmtop0rn0"]
 
 [ext_resource type="Script" uid="uid://dqn2qitm2b8et" path="res://scenes/entities/big_bad.gd" id="1_vhq8k"]
+[ext_resource type="Texture2D" uid="uid://db3g78i18r3ff" path="res://assets/bigbad/front.png" id="2_wxy70"]
+[ext_resource type="Texture2D" uid="uid://ckjkllwen261y" path="res://assets/bigbad/frontside.png" id="3_f5ept"]
+[ext_resource type="Texture2D" uid="uid://bcwvdsvlcl4lg" path="res://assets/bigbad/side.png" id="4_2bj6q"]
+[ext_resource type="Texture2D" uid="uid://bgl2qu1o084hs" path="res://assets/bigbad/backside.png" id="5_8chbm"]
+[ext_resource type="Texture2D" uid="uid://ds7u8lktcjjky" path="res://assets/bigbad/back.png" id="6_0isyw"]
+[ext_resource type="Script" uid="uid://btspathec4u3k" path="res://scripts/multiface_billboard_sprite_3d.gd" id="7_2bj6q"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vhq8k"]
 
@@ -41,6 +47,7 @@ raycast_collision_mask = 1
 shape = SubResource("CylinderShape3D_vhq8k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 material_override = SubResource("StandardMaterial3D_vhq8k")
 mesh = SubResource("CapsuleMesh_tj1t1")
 
@@ -70,6 +77,46 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MemoryArea"]
 shape = SubResource("SphereShape3D_vhq8k")
+
+[node name="OmnidirectionalSprite3D" type="Node3D" parent="." node_paths=PackedStringArray("_front", "_front_side", "_side", "_back_side", "_back")]
+transform = Transform3D(2.40304, 0, 0, 0, 2.40304, 0, 0, 0, 2.40304, 0, 0, 0)
+script = ExtResource("7_2bj6q")
+_front = NodePath("Front")
+_front_side = NodePath("FrontSide")
+_side = NodePath("Side")
+_back_side = NodePath("BackSide")
+_back = NodePath("Back")
+flip_h = null
+metadata/_custom_type_script = "uid://btspathec4u3k"
+
+[node name="Front" type="Sprite3D" parent="OmnidirectionalSprite3D"]
+billboard = 1
+texture_filter = 0
+texture = ExtResource("2_wxy70")
+
+[node name="FrontSide" type="Sprite3D" parent="OmnidirectionalSprite3D"]
+visible = false
+billboard = 1
+texture_filter = 0
+texture = ExtResource("3_f5ept")
+
+[node name="Side" type="Sprite3D" parent="OmnidirectionalSprite3D"]
+visible = false
+billboard = 1
+texture_filter = 0
+texture = ExtResource("4_2bj6q")
+
+[node name="BackSide" type="Sprite3D" parent="OmnidirectionalSprite3D"]
+visible = false
+billboard = 1
+texture_filter = 0
+texture = ExtResource("5_8chbm")
+
+[node name="Back" type="Sprite3D" parent="OmnidirectionalSprite3D"]
+visible = false
+billboard = 1
+texture_filter = 0
+texture = ExtResource("6_0isyw")
 
 [connection signal="body_entered" from="Eye/LineOfSight" to="." method="_on_line_of_sight_body_entered"]
 [connection signal="body_exited" from="Eye/LineOfSight" to="." method="_on_line_of_sight_body_exited"]

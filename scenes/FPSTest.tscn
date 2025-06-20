@@ -29,9 +29,11 @@ transform = Transform3D(0.408633, 0.79042, -0.456349, 0, 0.5, 0.866025, 0.912699
 
 [node name="Player" parent="." instance=ExtResource("1_21wsp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60901, 0)
+collision_mask = 1
 
 [node name="BigBad" parent="." instance=ExtResource("2_tj1t1")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.831555, 1.46474, -6.11642)
+collision_mask = 1
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_21wsp")
